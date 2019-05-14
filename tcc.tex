@@ -1,0 +1,405 @@
+%% abtex2-modelo-trabalho-academico.tex, v-1.9.7 laurocesar
+%% Copyright 2012-2018 by abnTeX2 group at http://www.abntex.net.br/ 
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is the abnTeX2 team, led
+%% by Lauro César Araujo. Further information are available on 
+%% http://www.abntex.net.br/
+%%
+%% This work consists of the files abntex2-modelo-trabalho-academico.tex,
+%% abntex2-modelo-include-comandos and abntex2-modelo-references.bib
+%%
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Trabalho Academico (tese de doutorado, dissertacao de
+% mestrado e trabalhos monograficos em geral) em conformidade com 
+% ABNT NBR 14724:2011: Informacao e documentacao - Trabalhos academicos -
+% Apresentacao
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+%	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	oneside,			% para impressão em recto e verso. Oposto a oneside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+	% -- o\part{title}pções do pacote babel --
+	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil				% o último idioma é o principal do documento
+	]{configuracoes/tcc}
+
+% ---
+% Pacotes básicos 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+%\usepackage{times}				% Usa a fonte Times
+\usepackage{mathptmx}				% Usa a fonte Times
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{varwidth}
+\usepackage{array}
+% ---
+		
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+%Pacote para justificar textos
+\usepackage{ragged2e}
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+	%pagebackref=true,
+	pdftitle={\@title}, 
+	pdfauthor={\@author},
+	pdfsubject={\imprimirpreambulo},
+	pdfcreator={LaTeX with abnTeX2},
+	pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico}, 
+	colorlinks=true,       		% false: boxed links; true: colored links
+	linkcolor=black,          	% color of internal links
+	citecolor=black,        		% color of links to bibliography
+	filecolor=magenta,      		% color of file links
+	urlcolor=blue,
+	bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% ---
+% Posiciona figuras e tabelas no topo da página quando adicionadas sozinhas
+% em um página em branco. Ver https://github.com/abntex/abntex2/issues/170
+\makeatletter
+\setlength{\@fptop}{5pt} % Set distance from top of page to first float
+\makeatother
+% ---
+
+% ---
+% Possibilita criação de Quadros e Lista de quadros.
+% Ver https://github.com/abntex/abntex2/issues/176
+%
+\newcommand{\quadroname}{Quadro}
+\newcommand{\listofquadrosname}{Lista de quadros}
+
+\newfloat[chapter]{quadro}{loq}{\quadroname}
+\newlistof{listofquadros}{loq}{\listofquadrosname}
+\newlistentry{quadro}{loq}{0}
+
+% configurações para atender às regras da ABNT
+\setfloatadjustment{quadro}{\centering}
+\counterwithout{quadro}{chapter}
+\renewcommand{\cftquadroname}{\quadroname\space} 
+\renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
+
+\setfloatlocations{quadro}{hbtp} % Ver https://github.com/abntex/abntex2/issues/176
+% ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+%\renewcommand{\ABNTEXchapterfont}{\fontfamily{times}\fontseries{b}\selectfont}
+%\renewcommand{\ABNTEXchapterfontsize}{\HUGE}
+%\renewcommand{\ABNTEXchapterfont}{\rmfamily\bfseries}
+%\setsecheadstyle{\bfseries \Large}
+\renewcommand{\ABNTEXchapterfontsize}{\LARGE}
+
+\include{elementos/pre_textuais/capa_folha_rosto}
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+\pagestyle{IFMS}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto
+% ---
+
+
+\include{elementos/pre_textuais/ficha_catalografica}
+
+\include{elementos/pre_textuais/folha_aprovacao}
+
+\include{elementos/pre_textuais/dedicatoria}
+
+\include{elementos/pre_textuais/agradecimentos}
+
+\include{elementos/pre_textuais/epigrafe}
+
+\include{elementos/pre_textuais/resumo}
+
+\include{elementos/pre_textuais/lista_ilustracoes}
+
+\include{elementos/pre_textuais/lista_quadros}
+
+\include{elementos/pre_textuais/lista_tabelas}
+
+\include{elementos/pre_textuais/lista_abreviaturas_siglas}
+
+\include{elementos/pre_textuais/lista_simbolos}
+
+\include{elementos/pre_textuais/sumario}
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+\include{elementos/textuais/introducao}
+
+\include{elementos/textuais/cap1}
+
+\include{elementos/textuais/cap2}
+
+\include{elementos/textuais/cap3}
+
+\include{elementos/textuais/conclusao}
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+% ----------------------------------------------------------
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{elementos/referencias_bibliograficas}
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+\begin{apendicesenv}
+
+% Imprime uma página indicando o início dos apêndices
+\partapendices
+
+% ----------------------------------------------------------
+\chapter{Quisque libero justo}
+% ----------------------------------------------------------
+
+\lipsum[50]
+
+% ----------------------------------------------------------
+\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+% ----------------------------------------------------------
+\lipsum[55-57]
+
+\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+\begin{anexosenv}
+
+% Imprime uma página indicando o início dos anexos
+\partanexos
+
+% ---
+\chapter{Tabela de Plantas Escolhidas}
+% ---
+
+	\begin{table}[h]
+		
+		\caption{Relação de Plantas}
+		\begin{tabular}{ccccc}
+			\hline
+			Nome		  	 & Nome Científico 				   			& Família 		& Época de 			 & Grau de			\\
+			Popular			 & 											&				& Floração			& Ameaça			\\
+			% Note a separação de col. e a quebra de linhas
+			\hline                               % para uma linha horizontal
+			Acuri   		 & \textit{Attalea phalerata}	   			& Arecaceae 	& ago-jan 			& LC				\\
+							 & Mart. ex Spreng				   			&				&				    &					\\
+							
+			Amburana		 & \textit{Amburana cearensis} 	   			& Fabaceae 		& mar-jun 			& NT				\\
+							 & (Allemão) A.C.Sm				   			&				&				    &					\\
+			
+			Angico 			 & \textit{Albizia niopoides} 	   			& Fabaceae 		& out-jan 			& LC 				\\
+							 & (Spruce ex Benth.) Burkart 	   			&				&					&					\\
+								
+			Aroeira 		 & \textit{Myracrodruon urundeuva} 			& Anacardiaceae	& ago-set 			& LC 				\\
+							 &  Allemão									&				&				    &					\\
+			
+			Bocaiúva 		 & \textit{Acrocomia aculeata}      		& Arecaceae 	& out-fev 			& NE 				\\
+							 &  (Jacq) Lodd. ex Mart.		    		&				&				    &					\\
+			
+			Cajá 			 & \textit{Spondias mombin}		    		& Anacardiaceae & out-nov 			& NE 				\\
+							 & L. 						  	    		&				&				    &					\\
+			
+			Caju 			 & \textit{Anacardium humile}  	    		& Anacardiaceae & ago-nov 			& LC 				\\
+							 &  A.St.-Hil.					    		&				&			    	&					\\
+			
+			Caqui do Cerrado & \textit{Diospyros hispida}  	    		& Ebenaceae 	& ago-nov 			& LC 				\\
+							 &  A.DC						    		&				&				   	&					\\
+			
+			Caranda 		 & \textit{Copernicia alba}  	    		& Arecaceae 	& jul-dez 			& NE 				\\
+							 & Morong ex Morong \& Britton	    		&				&					&					\\
+			
+			Gonçalo 		 & \textit{Astronium fraxinifolium}			& Anacardiaceae & jul-set 			& LC 				\\
+							 &  Schott.									&				&				    &					\\
+			
+			Ipê-Amarelo		 & \textit{Tabebuia aurea}   				& Bignoniaceae 	& ago-out 			& NE 				\\
+							 & (Silva Manso) Benth. \&	Hook.f.			&				&				    &					\\
+							 & ex S.Moore								&				&				    &					\\
+						
+			Ipê-Branco 		 & \textit{Tabebuia roseoalba}  			& Bignoniaceae 	& ago-dez			& NE 				\\
+							 & (Ridl.) Sandwith 						&				&				    &					\\
+			
+			Ipê-Verde 		 & \textit{Cybistax antisyphilitica}		& Bignoniaceae  & ago-mar 			& NE 				\\
+							 & (Mart) Mart 								&				&				    &					\\
+			
+			Jenipapo 		 & \textit{Genipa americana}  				& Rubiaceae 	& set-dez 			& LC 				\\
+							 & L. 										&				&				    &					\\
+			
+			Louro Preto 	 & \textit{Cordia glabrata}  				& Boraginaceae 	& ago-out 			& NE 				\\
+							 & (Mart.) A.DC. 							&				&				    &					\\
+			
+			Passarinho 		 & \textit{Pterogyne nitens}  				& Fabaceae 		& fev-ago 			& LC 				\\
+							 & Tul										&				&				    &					\\
+			
+			Pata de vaca 	 & \textit{Bauhinia rufa}	  				& Fabaceae 		& mai-nov 			& NE 				\\
+							 &  (Bong.) Steud.							&				&				    &					\\
+			
+			Sucupira 		 & \textit{Bowdichia virgilioides}		  	& Fabaceae 		& jun-ago 			& NT 				\\
+							 & Kunth									&				&				    &					\\
+			
+			Tarumã           & \textit{Vitex cymosa}	 				& Lamiaceae 	& set-nov 			& NE 				\\
+							 &  Bertero ex Spreng.						& 				&					&					\\
+			
+			Ximbuva 		 & \textit{Enterolobium contortisiliquum}	& Fabaceae 		& set-nov 			& NE 				\\
+							 &  (Vell.) Morong 							&				&					&					\\
+			\hline
+		\end{tabular}
+	\end{table}
+
+% ---
+\chapter{Anexo B}
+% ---
+
+
+
+% ---
+\chapter{Anexo C}
+% ---
+
+
+
+\end{anexosenv}
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+\phantompart
+\printindex
+%---------------------------------------------------------------------
+
+\end{document}
